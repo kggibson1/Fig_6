@@ -14,18 +14,19 @@ Command line input:
 
 Absolute_path_to_config_file Absolute_path_to_master_data_folder      
 
-
 """
 
-import os
 import sys
+import os
 
-#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# Add the parent directory of the script to the system path (2 directories up)
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
 import argparse
-# from ..BacStroke import main as bs
-from ..Studies import BacStroke
+# from Studies.BacStroke import main as bs
 from BacStroke import main as bs
+# from ..Studies import BacStroke
+# from BacStroke import main as bs
 # import BacPlot as bp
 import Functions as f
 import glob
