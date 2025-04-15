@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*- 
 """
 Launch single simulation for figure 6.
 
@@ -18,8 +18,15 @@ Absolute_path_to_config_file Absolute_path_to_master_data_folder
 """
 
 import os
+import sys
+
+#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+import argparse
+# from ..BacStroke import main as bs
+from ..Studies import BacStroke
 from BacStroke import main as bs
-import BacPlot as bp
+# import BacPlot as bp
 import Functions as f
 import glob
 import numpy as np
@@ -28,6 +35,7 @@ import pandas as pd
 import matplotlib as mpl
 from pathlib import Path
 
+#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 
 def get_ic_path(vs = '0'):
@@ -140,8 +148,28 @@ def run_sim(config, output_folder):
                         
     #     # begin simulations using the edited config file
     #     bs(config, run_output)
+
     
-config, output_folder = input("Abs path to config folder & output folder: ").split()
+def main():
+    # Set up argument parser
+    parser = argparse.ArgumentParser()
     
-run_sim(config, output_folder)
+    # Define command-line arguments
+    parser.add_argument('config', type = str, help = "Absolute path to the config file.")
+    parser.add_argument('output_folder', type = str, help = "Absolute path to the master data folder where results will be stored.")
+    
+    # Parse command-line arguments
+    args = parser.parse_args()
+    
+    # Run simulation with parsed arguments
+    run_sim(args.config, args.output_folder)
+
+# Entry point to run the script
+if __name__ == '__main__':
+    main()
+    
+    
+# config, output_folder = input("Abs path to config folder & output folder: ").split()
+    
+# run_sim(config, output_folder)
 
