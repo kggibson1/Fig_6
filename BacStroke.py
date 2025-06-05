@@ -362,7 +362,7 @@ def main(config_file, output_file):
                 
                 # print progress
                 if i%1000 == 0:
-                    print(f'Progress: {time:.2f}s out of {total_time:.2f}s')
+                    print(f'Progress: {time:.2f}s out of {total_time:.2f}s ({100 * time / total_time:.1f}%)')
                     #print(f'time = {time}s / {total_time}s')
                 #output_array[j, int(i/output_interval)] = np.array([bacteria[j].pos[0], bacteria[j].pos[1], bacteria[j].pos[2], time])
                 
