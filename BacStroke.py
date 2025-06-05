@@ -163,10 +163,10 @@ def main(config_file, output_file):
     for i in range(numstep + 1):  # Anything that happens per each timestep 
       
         
-        #print()
-        #text progress bar
-        if i%1000 == 0:
-            print(f'Progress: {i} out of {numstep}')
+        # #print()
+        # #text progress bar
+        # if i%1000 == 0:
+        #     print(f'Progress: {i} out of {numstep}')
         
         #time += dt # add another timestep to current time
         #time_array[i] = time # storing current time in simulation
@@ -359,6 +359,11 @@ def main(config_file, output_file):
             if i%output_interval == 0:
                 csv_writer.writerow([bacteria[j].pos[0], bacteria[j].pos[1], bacteria[j].pos[2], time])
                 csvfile.flush() # ensure immediate writing
+                
+                # print progress
+                if i%1000 == 0:
+                    print(f'Progress: {time:.2f}s out of {total_time:.2f}s')
+                    #print(f'time = {time}s / {total_time}s')
                 #output_array[j, int(i/output_interval)] = np.array([bacteria[j].pos[0], bacteria[j].pos[1], bacteria[j].pos[2], time])
                 
             # # get planar positions
