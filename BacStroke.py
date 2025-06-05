@@ -42,8 +42,8 @@ plt.rcParams.update({
 })
 
 # #handle graph formatting and style
-# plt.style.use('shendrukGroupStyle')
-# import shendrukGroupFormat as ed
+plt.style.use('shendrukGroupStyle')
+import shendrukGroupFormat as ed
 MYLW=1.0 #line width
 
 #random.seed(66)
@@ -75,7 +75,8 @@ def main(config_file, output_file):
     time = 0.0 # [s]
     dt = float(config[1]) # length of each timestep [s]
     total_time = float(config[2]) # total length of similation [s]
-    numstep = round(total_time/dt) # number of steps that simulation will take, rounded to int as used as np sizing
+    #numstep = round(total_time/dt) # number of steps that simulation will take, rounded to int as used as np sizing
+    numstep = int(round(total_time / dt))
     
     # clinostat parameters 
     clino_rotation_rate = float(config[3]) # rotation rate of clinostat [RPM]
@@ -100,8 +101,11 @@ def main(config_file, output_file):
     
     centrifugal_force_status = config[13] # does the bacterial dynamics include centrifugal force?
     boundry_conditions = config[14]
-
-    output_interval = int(config[15])
+    
+    # determine data output rate
+    output_interval_time = float(config[15])
+    output_interval = max(1, int(round(output_interval_time / dt)))
+    print(f'This one {output_interval_time}, {output_interval}')
     # read in information about intial state of bacteium (position etc...) from initial conditions file
     
     # Determining length of inputfile = no. bacteria in system   
@@ -156,7 +160,7 @@ def main(config_file, output_file):
 
     # 3. beginning of time integration  #######################################
     
-    for i in range(numstep):  # Anything that happens per each timestep 
+    for i in range(numstep + 1):  # Anything that happens per each timestep 
       
         
         #print()
@@ -164,7 +168,7 @@ def main(config_file, output_file):
         if i%1000 == 0:
             print(f'Progress: {i} out of {numstep}')
         
-        time += dt # add another timestep to current time
+        #time += dt # add another timestep to current time
         #time_array[i] = time # storing current time in simulation
         
         # update the position of the bacterium
@@ -366,6 +370,9 @@ def main(config_file, output_file):
             #if np.linalg.norm(planar_pos) > 0.05:
                 #print(np.linalg.norm(planar_pos))
             #print(pos_array[j, i])
+            
+        time += dt # add another timestep to current time
+        #time_array[i] = time # storing current time in simulation
     
 
     # saving parameters to output file
